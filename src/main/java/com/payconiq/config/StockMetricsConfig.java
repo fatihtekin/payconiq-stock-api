@@ -18,6 +18,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Metrics configuration for Prometheus
+ * Probably use more generic metrics implementation using something like https://micrometer.io/
+ */
 @Configuration
 @ConfigurationProperties
 @EnableConfigurationProperties
@@ -36,7 +40,7 @@ public class StockMetricsConfig {
             .map(n -> Arrays.asList(n*1, n*2, n*5))
             .flatMap(List::stream).mapToDouble(Double::doubleValue).toArray();
 
-    public static final Histogram STOCK_API_HISTOGRAM = Histogram.build()
+    public static final Histogram STOCK_API_REQUEST_HISTOGRAM = Histogram.build()
             .name("http_request_duration_seconds")
             .help("Duration of HTTP request in seconds")
             .labelNames("method", "path", "status")

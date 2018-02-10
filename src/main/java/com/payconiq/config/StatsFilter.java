@@ -13,11 +13,11 @@ import io.prometheus.client.SimpleTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import static com.payconiq.config.StockMetricsConfig.STOCK_API_HISTOGRAM;
+import static com.payconiq.config.StockMetricsConfig.STOCK_API_REQUEST_HISTOGRAM;
 
 /**
  * This filter catches all the requests and once they need to be converted to generalize
- * url pattern then converts them and then sends them to STOCK_API_HISTOGRAM histogram.
+ * url pattern then converts them and then sends them to STOCK_API_REQUEST_HISTOGRAM histogram.
  * an example: /api/stock/23 => /api/stock/*
  *
  * If needed in the future new patterns can be added to GENERALIZE_PATH_MAP
@@ -58,7 +58,7 @@ public class StatsFilter implements Filter {
                 if (patternToPath.isPresent()) {
                     servletPath = patternToPath.get().getValue();
                 }
-                STOCK_API_HISTOGRAM.labels(httpRequest.getMethod(), servletPath, statusCode).observe(elapsedSeconds);
+                STOCK_API_REQUEST_HISTOGRAM.labels(httpRequest.getMethod(), servletPath, statusCode).observe(elapsedSeconds);
                 LOGGER.trace("{}: {} seconds ", httpRequest.getServletPath(), elapsedSeconds);
             }
             return;

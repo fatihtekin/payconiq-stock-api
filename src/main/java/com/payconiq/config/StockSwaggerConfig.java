@@ -8,7 +8,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * A Swagger configuration for the Stock API
+ * The Swagger configuration for the Stock API
  */
 @Configuration
 @EnableSwagger2
