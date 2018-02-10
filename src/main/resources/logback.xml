@@ -1,0 +1,15 @@
+<configuration>
+    <logger name="com.payconiq" level="${PAYCONIQ_LOG_LEVEL:-DEBUG}"/>
+    <logger name="com.ryantenney.metrics" level="${METRICS_LOG_LEVEL:-INFO}"/>
+    <logger name="org.springframework" level="${SPRING_LOG_LEVEL:-INFO}"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${ROOT_LOG_LEVEL:-INFO}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
