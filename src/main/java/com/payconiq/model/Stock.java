@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class Stock {
 
     @NotNull
-    @Min(value = 0L, message = "{javax.validation.constraints.positive}")
+    @Min(value = 1L, message = "{javax.validation.constraints.positive}")
     private Long id;
 
     @NotNull
