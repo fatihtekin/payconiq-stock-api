@@ -2,6 +2,9 @@
 Stock api assignment
 Default user pass is `admin/admin` as in `application.yml`
 
+##GUI
+localhost:8080
+
 ## Metrics 
 ```properties
 http://localhost:8080/metrics
@@ -30,7 +33,7 @@ docker run -p 8080:8080 stock-api
 mvn clean package
 ```
 
-##Run from spring boot plugin from root folder of the project 
+##Run using spring boot plugin 
 ```bash
 mvn spring-boot:run -Dspring.config.location=file:///./application.yml
 ```
