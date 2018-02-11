@@ -27,7 +27,7 @@ docker run -p 8080:8080 stock-api
 
 ## Build
 ```bash
-mvn clean install
+mvn clean package
 ```
 
 ## Code coverage
