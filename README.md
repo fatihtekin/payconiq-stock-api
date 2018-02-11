@@ -1,9 +1,21 @@
-# payconiq-stock-api
+#Payconiq-stock-api
 Stock api assignment
-
-
-Metrics 
+##Metrics 
 Default user pass is admin/admin
-http://localhost:8080/metrics 
-
+```properties
+http://localhost:8080/metrics
+```
+##Swagger
+```properties
+http://localhost:8080/swagger-ui.html
+```
+##Config
+Security can be disabled by setting management.security.enabled to "false" in application.yml file
+```properties
 -Dspring.config.location=file:///./application.yml
+```
+##Docker
+```bash
+docker build -f Dockerfile.app -t stock-api .
+docker run -p 8080:8080 stock-api
+```

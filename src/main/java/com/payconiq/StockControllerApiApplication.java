@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Runner class for the Stock API

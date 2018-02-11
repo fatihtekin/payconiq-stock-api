@@ -36,7 +36,7 @@ public class StockMetricsConfig {
         this.urlPath = urlPath;
     }
 
-    public static final double[] buckets = Stream.of(0.0001d, 0.001d, 0.01d, 0.1d, 1d, 10d)
+    private static final double[] buckets = Stream.of(0.0001d, 0.001d, 0.01d, 0.1d, 1d, 10d)
             .map(n -> Arrays.asList(n*1, n*2, n*5))
             .flatMap(List::stream).mapToDouble(Double::doubleValue).toArray();
 
@@ -57,7 +57,7 @@ public class StockMetricsConfig {
 
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
-        LOG.info("Initialising included Collectors from Prometheus");
+        LOG.info("Initializing included Collectors from Prometheus");
         DefaultExports.initialize();
         LOG.info("Creating Prometheus MetricsServlet on path: {}", urlPath);
         return new ServletRegistrationBean(new MetricsServlet(), urlPath);

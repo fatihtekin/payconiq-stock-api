@@ -43,7 +43,8 @@ public class StatsFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse) {
+        if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse
+                && ((HttpServletRequest) req).getServletPath().startsWith("/api/stocks")) {
             SimpleTimer timer = new SimpleTimer();
             try {
                 chain.doFilter(req, resp);
