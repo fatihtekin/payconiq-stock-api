@@ -12,13 +12,13 @@ import java.util.List;
 
 public class StockServiceTest {
 
-    private static StockService stockService = new StockService();
+    private static final StockService stockService = new StockService();
 
     @BeforeClass
     public static void setup() {
         ReflectionTestUtils.setField(stockService, "initSize", 10);
         stockService.init();
-        List<StockResponse> responses = stockService.getStocks();
+        final List<StockResponse> responses = stockService.getStocks();
         Assert.assertEquals("Initial stocks count not correct", 10, responses.size());
     }
 
@@ -26,7 +26,7 @@ public class StockServiceTest {
     public void test_Given_InitialStocksCreated_Then_GetStockSuccessfully() {
         final StockResponse stockResponse = stockService.createStockFromRequest(1L);
         Assert.assertNotNull(stockResponse.getLastUpdate());
-        StockResponse expectedStockResponse = StockResponse.builder()
+        final StockResponse expectedStockResponse = StockResponse.builder()
                 .id(1L)
                 .name("name_1")
                 .currentPrice(new BigDecimal("100001.66"))
@@ -40,9 +40,9 @@ public class StockServiceTest {
         final String name = "testUpdated";
         final Long lastUpdateMax = System.currentTimeMillis();
         Thread.sleep(50L);
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
         final long stockId = 2L;
-        StockResponse stockResponse = stockService.updateStock(stockRequest, stockId);
+        final StockResponse stockResponse = stockService.updateStock(stockRequest, stockId);
         Assert.assertTrue("lastUpdate is not updated to later date", stockResponse.getLastUpdate() > lastUpdateMax);
         Assert.assertEquals("currentPrice is wrong", currentPrice, stockResponse.getCurrentPrice());
         Assert.assertEquals("name is wrong", name, stockResponse.getName());
@@ -54,8 +54,8 @@ public class StockServiceTest {
     public void test_Given_ValidStockCreateRequest_Then_CreateStockSuccessfully() {
         final BigDecimal currentPrice = new BigDecimal("12.45");
         final String name = "test";
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
-        StockResponse stockResponse = stockService.createStock(stockRequest);
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockResponse stockResponse = stockService.createStock(stockRequest);
         Assert.assertNotNull("lastUpdate should not be null", stockResponse.getLastUpdate());
         Assert.assertNotNull("id should not be null", stockResponse.getId());
         Assert.assertEquals("currentPrice is wrong", currentPrice, stockResponse.getCurrentPrice());
@@ -67,7 +67,7 @@ public class StockServiceTest {
     public void test_Given_NonExistingStockUpdateRequest_Then_UpdateShouldFail() {
         final BigDecimal currentPrice = new BigDecimal("12.45");
         final String name = "test";
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
         stockService.updateStock(stockRequest, -666L);
     }
 

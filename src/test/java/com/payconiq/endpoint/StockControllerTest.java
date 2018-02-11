@@ -43,7 +43,7 @@ public class StockControllerTest {
     private int port;
     @Value("${endpoints.prometheus.path}")
     private String urlPath;
-    private MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String.class);
+    private final MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String.class);
     private String metricsUrl;
 
     @Before
@@ -59,7 +59,7 @@ public class StockControllerTest {
                 .getForEntity("/api/stocks", StockResponse[].class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertTrue(responseEntity.getBody().length >= 10);
-        assertTrue(Arrays.asList(responseEntity.getBody()).stream().map(stock -> stock.getId()).collect(Collectors.toList()).containsAll(ONE_TO_TEN));
+        assertTrue(Arrays.stream(responseEntity.getBody()).map(StockResponse::getId).collect(Collectors.toList()).containsAll(ONE_TO_TEN));
         testMetric("/api/stocks", "GET", HttpStatus.OK);
     }
 
@@ -70,7 +70,7 @@ public class StockControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         final StockResponse stockResponse = responseEntity.getBody();
         Assert.assertNotNull(stockResponse.getLastUpdate());
-        StockResponse expectedStockResponse = StockResponse.builder()
+        final StockResponse expectedStockResponse = StockResponse.builder()
                 .id(1L)
                 .name("name_1")
                 .currentPrice(new BigDecimal("100001.66"))
@@ -80,7 +80,7 @@ public class StockControllerTest {
     }
 
     @Test
-    public void test_WhenNonExistanceGetStock_ThenFail() throws IOException {
+    public void test_WhenNonExistenceGetStock_ThenFail() throws IOException {
         final ResponseEntity<String> errorEntity = restTemplate
                 .getForEntity("/api/stocks/-123", String.class);
         assertEquals(HttpStatus.NOT_FOUND, errorEntity.getStatusCode());
@@ -101,7 +101,7 @@ public class StockControllerTest {
     public void test_WhenValidCreateStock_ThenReturnStockSuccessfully() {
         final BigDecimal currentPrice = new BigDecimal("12.45");
         final String name = "test";
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
         final ResponseEntity<StockResponse> stockResponse = restTemplate.postForEntity("/api/stocks", stockRequest, StockResponse.class);
         assertEquals(HttpStatus.CREATED, stockResponse.getStatusCode());
         assertEquals(String.format("http://localhost:%d/api/stocks/11", port), stockResponse.getHeaders().get(HttpHeaders.LOCATION).get(0));
@@ -111,7 +111,7 @@ public class StockControllerTest {
     @Test
     public void test_WhenInValidCreateStock_ThenFail() {
         final BigDecimal currentPrice = new BigDecimal("12.45");
-        StockRequest stockRequest = StockRequest.builder().currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().currentPrice(currentPrice).build();
         final ResponseEntity<StockResponse> stockResponse = restTemplate.postForEntity("/api/stocks", stockRequest, StockResponse.class);
         assertEquals(HttpStatus.BAD_REQUEST, stockResponse.getStatusCode());
         testMetric("/api/stocks", "POST", HttpStatus.BAD_REQUEST);
@@ -129,23 +129,23 @@ public class StockControllerTest {
     public void test_WhenValidUpdateStock_ThenReturnStockSuccessfully() {
         final BigDecimal currentPrice = new BigDecimal("666.6");
         final String name = "testUpdated";
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
         final ResponseEntity<Void> stockResponse = restTemplate.exchange("/api/stocks/2", HttpMethod.PUT, new HttpEntity(stockRequest), Void.class, new HashMap<>());
         assertEquals(HttpStatus.NO_CONTENT, stockResponse.getStatusCode());
         testMetric("/api/stocks/*", "PUT", HttpStatus.NO_CONTENT);
     }
 
     @Test
-    public void test_WhenNonExistanceUpdateStock_ThenFail() {
+    public void test_WhenNonExistenceUpdateStock_ThenFail() {
         final BigDecimal currentPrice = new BigDecimal("666.6");
         final String name = "testUpdated";
-        StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
+        final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
         final ResponseEntity<Void> stockResponse = restTemplate.exchange("/api/stocks/-222", HttpMethod.PUT, new HttpEntity(stockRequest), Void.class, new HashMap<>());
         assertEquals(HttpStatus.NOT_FOUND, stockResponse.getStatusCode());
         testMetric("/api/stocks/*", "PUT", HttpStatus.NOT_FOUND);
     }
 
-    private void testMetric(String path, String method, HttpStatus status) {
+    private void testMetric(final String path, final String method, final HttpStatus status) {
         final ResponseEntity<String> metricsResponse = restTemplate.getForEntity(metricsUrl, String.class);
         assertEquals("Expected HTTP OK response", HttpStatus.OK, metricsResponse.getStatusCode());
         final String metricsData = metricsResponse.getBody();

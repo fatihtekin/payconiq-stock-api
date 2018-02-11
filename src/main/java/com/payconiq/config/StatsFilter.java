@@ -39,10 +39,10 @@ public class StatsFilter implements Filter {
     }};
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(final FilterConfig filterConfig) {}
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain chain) throws IOException, ServletException {
         if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse
                 && ((HttpServletRequest) req).getServletPath().startsWith("/api/stocks")) {
             SimpleTimer timer = new SimpleTimer();
