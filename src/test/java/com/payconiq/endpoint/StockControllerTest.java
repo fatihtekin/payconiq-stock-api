@@ -76,7 +76,7 @@ public class StockControllerTest {
         final StockResponse expectedStockResponse = StockResponse.builder()
                 .id(1L)
                 .name("name_1")
-                .currentPrice(new BigDecimal("100001.66"))
+                .currentPrice(new BigDecimal("1.66"))
                 .lastUpdate(stockResponse.getLastUpdate()).build();
         Assert.assertEquals("Get stock is not working", expectedStockResponse, stockResponse);
         testMetric("/api/stocks/*", "GET", HttpStatus.OK);
@@ -113,18 +113,19 @@ public class StockControllerTest {
 
     @Test
     public void test_WhenInValidCreateStock_ThenFail() {
-        final BigDecimal currentPrice = new BigDecimal("12.45");
+        final BigDecimal currentPrice = new BigDecimal("-12.45");
         final StockRequest stockRequest = StockRequest.builder().currentPrice(currentPrice).build();
-        final ResponseEntity<StockResponse> stockResponse = restTemplate.postForEntity("/api/stocks", stockRequest, StockResponse.class);
-        assertEquals(HttpStatus.BAD_REQUEST, stockResponse.getStatusCode());
+        final ResponseEntity<String> errorResponse = restTemplate.postForEntity("/api/stocks", stockRequest, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, errorResponse.getStatusCode());
+        assertTrue(errorResponse.getBody().contains("Value must be positive"));
         testMetric("/api/stocks", "POST", HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void test_WhenInValidJsonCreateStock_ThenFail() {
         final String invalidJson = "{id\":\"2\"}";
-        final ResponseEntity<String> stockResponse = restTemplate.postForEntity("/api/stocks", invalidJson, String.class);
-        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, stockResponse.getStatusCode());
+        final ResponseEntity<String> errorResponse = restTemplate.postForEntity("/api/stocks", invalidJson, String.class);
+        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, errorResponse.getStatusCode());
         testMetric("/api/stocks", "POST", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
@@ -143,8 +144,8 @@ public class StockControllerTest {
         final BigDecimal currentPrice = new BigDecimal("666.6");
         final String name = "testUpdated";
         final StockRequest stockRequest = StockRequest.builder().name(name).currentPrice(currentPrice).build();
-        final ResponseEntity<Void> stockResponse = restTemplate.exchange("/api/stocks/-222", HttpMethod.PUT, new HttpEntity(stockRequest), Void.class, new HashMap<>());
-        assertEquals(HttpStatus.NOT_FOUND, stockResponse.getStatusCode());
+        final ResponseEntity<Void> errorResponse = restTemplate.exchange("/api/stocks/-222", HttpMethod.PUT, new HttpEntity(stockRequest), Void.class, new HashMap<>());
+        assertEquals(HttpStatus.NOT_FOUND, errorResponse.getStatusCode());
         testMetric("/api/stocks/*", "PUT", HttpStatus.NOT_FOUND);
     }
 

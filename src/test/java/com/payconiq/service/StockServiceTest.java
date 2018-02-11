@@ -32,7 +32,7 @@ public class StockServiceTest {
         final StockResponse expectedStockResponse = StockResponse.builder()
                 .id(1L)
                 .name("name_1")
-                .currentPrice(new BigDecimal("100001.66"))
+                .currentPrice(new BigDecimal("1.66"))
                 .lastUpdate(stockResponse.getLastUpdate()).build();
         Assert.assertEquals("Get stock is not working", expectedStockResponse, stockResponse);
     }

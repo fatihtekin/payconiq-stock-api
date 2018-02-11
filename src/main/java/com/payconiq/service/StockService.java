@@ -13,6 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+/**
+ * Storage for stocks that handles create, update, get and list of stocks request
+ */
 @Service
 public class StockService {
 
@@ -30,7 +33,7 @@ public class StockService {
             final Stock stock = Stock.builder()
                     .id(idSequence.incrementAndGet())
                     .name("name_"+count)
-                    .currentPrice(BigDecimal.valueOf(count+100000.66))
+                    .currentPrice(BigDecimal.valueOf(count+.66).setScale(2, BigDecimal.ROUND_HALF_UP))
                     .lastUpdate(System.currentTimeMillis()).build();
             stockMap.put(stock.getId(), stock);
         }
@@ -83,7 +86,6 @@ public class StockService {
                 .currentPrice(stock.getCurrentPrice())
                 .lastUpdate(stock.getLastUpdate()).build();
     }
-
 
 }
 
