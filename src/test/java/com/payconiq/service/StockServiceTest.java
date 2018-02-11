@@ -10,6 +10,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Check in memory storage service {@link StockService}
+ */
 public class StockServiceTest {
 
     private static final StockService stockService = new StockService();
