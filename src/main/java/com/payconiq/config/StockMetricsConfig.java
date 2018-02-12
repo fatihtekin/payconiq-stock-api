@@ -37,8 +37,8 @@ public class StockMetricsConfig {
     }
 
     private static final double[] buckets = Stream.of(0.0001d, 0.001d, 0.01d, 0.1d, 1d, 10d)
-            .map(n -> Arrays.asList(n*1, n*2, n*5))
-            .flatMap(List::stream).mapToDouble(Double::doubleValue).toArray();
+            .flatMap(n -> Arrays.asList(n*1, n*2, n*5).stream())
+            .mapToDouble(Double::doubleValue).toArray();
 
     public static final Histogram STOCK_API_REQUEST_HISTOGRAM = Histogram.build()
             .name("http_request_duration_seconds")

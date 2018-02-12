@@ -27,7 +27,7 @@ public class StockServiceTest {
 
     @Test
     public void test_Given_InitialStocksCreated_Then_GetStockSuccessfully() {
-        final StockResponse stockResponse = stockService.createStockFromRequest(1L);
+        final StockResponse stockResponse = stockService.getStock(1L);
         Assert.assertNotNull(stockResponse.getLastUpdate());
         final StockResponse expectedStockResponse = StockResponse.builder()
                 .id(1L)
@@ -50,7 +50,7 @@ public class StockServiceTest {
         Assert.assertEquals("currentPrice is wrong", currentPrice, stockResponse.getCurrentPrice());
         Assert.assertEquals("name is wrong", name, stockResponse.getName());
         Assert.assertEquals("id is wrong", Long.valueOf(stockId), stockResponse.getId());
-        Assert.assertEquals("Stock is not stored stored properly", stockResponse, stockService.createStockFromRequest(stockResponse.getId()));
+        Assert.assertEquals("Stock is not stored stored properly", stockResponse, stockService.getStock(stockResponse.getId()));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class StockServiceTest {
         Assert.assertNotNull("id should not be null", stockResponse.getId());
         Assert.assertEquals("currentPrice is wrong", currentPrice, stockResponse.getCurrentPrice());
         Assert.assertEquals("name is wrong", name, stockResponse.getName());
-        Assert.assertEquals("Stock is not stored stored properly", stockResponse, stockService.createStockFromRequest(stockResponse.getId()));
+        Assert.assertEquals("Stock is not stored stored properly", stockResponse, stockService.getStock(stockResponse.getId()));
     }
 
     @Test(expected = StockNotFoundException.class)

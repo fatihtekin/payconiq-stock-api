@@ -43,7 +43,7 @@ public class StockController {
     @ApiOperation(value = "Return stock by id")
     @GetMapping(value = "/{id}", produces = "application/json")
     public StockResponse getStock(@PathVariable final Long id) {
-        return stockService.createStockFromRequest(id);
+        return stockService.getStock(id);
     }
 
     /**

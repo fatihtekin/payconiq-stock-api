@@ -45,7 +45,7 @@ public class StockService {
                 .collect(Collectors.toList());
     }
 
-    public StockResponse createStockFromRequest(final Long id) {
+    public StockResponse getStock(final Long id) {
         final Stock stock = stockMap.get(id);
         if (stock == null) {
             throw new StockNotFoundException(id);

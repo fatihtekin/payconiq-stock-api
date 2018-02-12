@@ -48,3 +48,4 @@ Pagination for /api/stock
 Better security options other than hardcoded in application.yml file
 CI/CD depending on github or gitlab
 Better look and feel and css for user interface
+Selenium tests for user interface
