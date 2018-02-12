@@ -46,9 +46,9 @@ mvn clean package site
 
 React setup part is inspired from [https://github.com/spring-guides/tut-react-and-spring-data-rest](https://github.com/spring-guides/tut-react-and-spring-data-rest)
 
-Things that could be improved
-Pagination for /api/stock
-Better security options other than hardcoded in application.yml file
-CI/CD depending on github or gitlab
-Better look and feel and css for user interface
-Selenium tests for user interface
+- Things that could be improved
+- Pagination for /api/stock
+- Better security options other than hardcoded in application.yml file
+- CI/CD depending on github or gitlab
+- Better look and feel and css for user interface
+- Selenium tests for user interface
