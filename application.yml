@@ -1,0 +1,15 @@
+stock-api:
+  init-size: 10
+endpoints:
+  prometheus:
+    path: "metrics"
+
+management:
+  security:
+    enabled: "true"
+    roles: "SUPERUSER"
+
+security:
+  user:
+    name: "admin"
+    password: "admin"

@@ -1,0 +1,38 @@
+{
+  "name": "payconiq-stock-api",
+  "version": "0.1.0",
+  "description": "Payconiq Stock Api",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:https://github.com/fatihtekin/payconiq-stock-api.git"
+  },
+  "keywords": [
+    "rest",
+    "hateoas",
+    "spring",
+    "data",
+    "react"
+  ],
+  "author": "Fatih Tekin",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/fatihtekin/payconiq-stock-api/issues"
+  },
+  "homepage": "https://github.com/fatihtekin/payconiq-stock-api/issues",
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "rest": "^1.3.1",
+    "webpack": "^1.12.2"
+  },
+  "scripts": {
+    "watch": "webpack --watch -d"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0"
+  }
+}
